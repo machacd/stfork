@@ -7,6 +7,15 @@
  */
 static char font[] = "Ubuntu Mono derivative Powerline:pixelsize=16:antialias=true:autohint=true";
 static int borderpx = 2;
+
+/*
+ * What program is execed by st depends of these precedence rules:
+ * 1: program passed with -e
+ * 2: utmp option
+ * 3: SHELL environment variable
+ * 4: value of shell in /etc/passwd
+ * 5: value of shell in config.h
+ */
 static char shell[] = "/bin/sh";
 static char *utmp = NULL;
 static char stty_args[] = "stty raw -echo -iexten echonl";
@@ -30,7 +39,7 @@ static unsigned int doubleclicktimeout = 300;
 static unsigned int tripleclicktimeout = 600;
 
 /* alt screens */
-static bool allowaltscreen = true;
+static int allowaltscreen = 1;
 
 /* frames per second st should at maximum draw to the screen */
 static unsigned int xfps = 120;
@@ -89,6 +98,14 @@ static unsigned int defaultfg = 12;
 static unsigned int defaultbg = 8;
 static unsigned int defaultcs = 14;
 
+
+/*
+ * Default colour and shape of the mouse cursor
+ */
+static unsigned int mouseshape = XC_xterm;
+static unsigned int mousefg = 7;
+static unsigned int mousebg = 0;
+
 /*
  * Colors used, when the specific fg == defaultfg. So in reverse mode this
  * will reverse too. Another logic would only make the simple feature too
@@ -113,9 +130,9 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ MODKEY|ShiftMask,     XK_Prior,       xzoom,          {.i = +1} },
-	{ MODKEY|ShiftMask,     XK_Next,        xzoom,          {.i = -1} },
-	{ MODKEY|ShiftMask,     XK_Home,        xzoomreset,     {.i =  0} },
+	{ MODKEY|ShiftMask,     XK_Prior,       xzoom,          {.f = +1} },
+	{ MODKEY|ShiftMask,     XK_Next,        xzoom,          {.f = -1} },
+	{ MODKEY|ShiftMask,     XK_Home,        xzoomreset,     {.f =  0} },
 	{ ShiftMask,            XK_Insert,      selpaste,       {.i =  0} },
 	{ MODKEY|ShiftMask,     XK_Insert,      clippaste,      {.i =  0} },
 	{ MODKEY|ShiftMask,     XK_C,           clipcopy,       {.i =  0} },
