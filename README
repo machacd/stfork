@@ -1,3 +1,7 @@
+My fork of the st terminal. Changes include
+* solarized dark colors
+* fixed the delete key
+
 st - simple terminal
 --------------------
 st is a simple terminal emulator for X which sucks less.
